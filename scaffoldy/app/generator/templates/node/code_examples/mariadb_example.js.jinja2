@@ -1,0 +1,29 @@
+{% if mariadb %}
+const mariadb = require('mariadb');
+const pool = mariadb.createPool({
+    host: '{{ slug }}-mariadb',
+    database: '{{ mariadb.database_name }}',
+    user: '{{ mariadb.username }}',
+    password: '{{ mariadb.password }}',
+    connectionLimit: 5
+    });
+
+async function main() {
+  let conn;
+  try {
+
+	conn = await pool.getConnection();
+	const res = await conn.query("CREATE TABLE myTable (id int, val varchar(255))");
+	console.log(res);
+	const reset = await conn.query("DROP TABLE myTable;");
+	console.log(reset);
+  } catch (err) {
+	throw err;
+  } finally {
+	if (conn) return conn.end();
+  }
+}
+
+main();
+
+{% endif %}

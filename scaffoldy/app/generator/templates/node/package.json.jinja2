@@ -1,0 +1,22 @@
+{
+  "name": "{{ slug }}-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    {% if mysql %}"mysql2": "^2.2.5",{% endif %}
+    {% if mariadb %}"mariadb": "^2.5.2",{% endif %}
+    {% if postgres %}"pg": "^8.6.0",{% endif %}
+    {% if mongodb %}"mongodb": "^3.6.4",{% endif %}
+    {% if nats %}"nats": "^1.4.12",{% endif %}
+    {% if memcached %}"memcache-plus": "^0.2.22",{% endif %}
+    {% if redis %}"redis": "^3.0.2",{% endif %}
+    {% if rabbitmq %}"amqplib": "^0.8.0"{% endif %}
+  }
+}
+

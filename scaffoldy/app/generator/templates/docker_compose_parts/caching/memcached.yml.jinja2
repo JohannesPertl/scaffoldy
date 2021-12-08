@@ -1,0 +1,8 @@
+{% if memcached %}
+    memcached:
+      image: memcached
+      container_name: {{ slug }}-memcached
+      restart: unless-stopped
+      ports:
+        - "11211:11211"
+{% endif %}

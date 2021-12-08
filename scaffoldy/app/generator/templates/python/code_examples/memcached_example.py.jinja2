@@ -1,0 +1,8 @@
+{% if memcached %}
+from pymemcache.client.base import Client
+
+client = Client('{{ slug }}-memcached')
+client.set('memcached_up', 'Memcached service is working!')
+result = client.get('memcached_up')
+print(result)
+{% endif %}

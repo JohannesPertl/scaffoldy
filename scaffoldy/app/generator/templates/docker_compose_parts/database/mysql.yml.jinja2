@@ -1,0 +1,21 @@
+{% if mysql %}
+    mysql:
+      image: mysql
+      container_name: {{ slug }}-mysql
+      working_dir: /application
+      volumes:
+        - mysql:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD={{ mysql.password }}
+        - MYSQL_DATABASE={{ mysql.database_name }}
+        - MYSQL_USER={{ mysql.username }}
+        - MYSQL_PASSWORD={{ mysql.password }}
+      ports:
+        - "{{ mysql.port }}:3306"
+    {% if mysql.phpmyadmin %}
+        {% set port = mysql.port + 1 %}
+        {% with db="mysql", port=port %}
+{% include "docker_compose_parts/database/phpmyadmin.yml.jinja2" %}
+        {% endwith %}
+    {% endif %}
+{% endif %}

@@ -1,0 +1,361 @@
+{% load crispy_forms_filters %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Scaffoldy - Template project for Docker Compose</title>
+    <meta
+            name="description"
+            content="Scaffoldy generates a template project for Docker Compose.">
+
+
+    {# Google Font #}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+
+    {# Favicon #}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {# Bootstrap #}
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for scrolling nav -->
+    <link href="{% static 'css/scrolling-nav.css' %}" rel="stylesheet">
+
+    {# Own style #}
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    {# Animations #}
+    <link href="{% static 'css/animations.css' %}" rel="stylesheet">
+
+
+    {# Font Awesome #}
+    <script src="https://kit.fontawesome.com/49e01718a4.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body id="page-top">
+
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="pb-0 navbar-brand js-scroll-trigger" href="#page-top">
+            <h3 class="m-0 p-0 logo hvr-grow">scaffoldy</h3>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#databases"><i class="fas fa-database"></i>
+                        Databases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#caching"><i class="fas fa-archive"></i> Caching</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#message-queuing"><i class="fas fa-stream"></i>
+                        Messaging</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#metrics"><i class="fas fa-chart-pie"></i> Metrics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#misc"><i class="fas fa-cube"></i> Other</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#general"><i class="fas fa-tools"></i> Config</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#download"><i class="fas fa-download"></i> Download</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-dark text-white">
+    <div class="container text-center">
+        <h1 class="pb-3 mb-5 logo">scaffoldy</h1>
+        <p class="mt-5 mb-3 lead">Generate a template project for Docker Compose <i class="fab fa-docker"></i></p>
+        <a href="#databases" class="mt-4 btn btn-success shadow-none js-scroll-trigger hvr-grow"><i
+                class="fas fa-cubes"></i> Choose your
+            services</a>
+    </div>
+</header>
+
+{# Necessary for bootstrap modal forms library #}
+<div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog mt-5">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog mt-5" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<form id="main-form" action="." method="post">
+    {% csrf_token %}
+
+    <section id="databases">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4"><i class="fas fa-database"></i> Databases
+                        {% include "buttons/feedback_button.html" with url='databases_feedback' %}
+                    </h2>
+
+                    <div id="mysql">
+                        {% include 'collapse_form.html' with form=mysql_form %}
+                    </div>
+                    <div id="mariadb">
+                        {% include 'collapse_form.html' with form=mariadb_form %}
+                    </div>
+                    <div id="postgres">
+                        {% include 'collapse_form.html' with form=postgres_form %}
+                    </div>
+                    <div id="mongodb">
+                        {% include 'collapse_form.html' with form=mongodb_form %}
+                    </div>
+
+                    {% include "buttons/next_button.html" with href="#caching" %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="caching">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% include "buttons/back_button.html" with href="#databases" %}
+                    <h2 class="mb-4"><i class="fas fa-archive"></i> Caching
+                        {% include "buttons/feedback_button.html" with url='caching_feedback' %}
+                    </h2>
+
+                    {{ memcached_form|crispy }}
+                    {{ redis_form|crispy }}
+                    {% include "buttons/next_button.html" with href="#message-queuing" %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="message-queuing">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% include "buttons/back_button.html" with href="#caching" %}
+                    <h2 class="mb-4"><i class="fas fa-stream"></i> Messaging
+                        {% include "buttons/feedback_button.html" with url='messaging_feedback' %}
+                    </h2>
+
+                    <div id="rabbitmq">
+                        {% include 'collapse_form.html' with form=rabbitmq_form %}
+                    </div>
+
+                    {{ nats_form|crispy }}
+
+                    {% include "buttons/next_button.html" with href="#metrics" %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="metrics">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% include "buttons/back_button.html" with href="#message-queuing" %}
+                    <h2 class="mb-4"><i class="fas fa-chart-pie"></i> Metrics
+                        {% include "buttons/feedback_button.html" with url='metrics_feedback' %}
+                    </h2>
+
+                    {{ prometheus_form|crispy }}
+                    <div id="grafana">
+                        {% include 'collapse_form.html' with form=grafana_form %}
+                    </div>
+                    {% include "buttons/next_button.html" with href="#misc" %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="misc">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% include "buttons/back_button.html" with href="#metrics" %}
+                    <h2 class="mb-4"><i class="fas fa-cube"></i> Other services
+                        {% include "buttons/feedback_button.html" with url='misc_feedback' %}
+                    </h2>
+
+                    {{ clickhouse_form|crispy }}
+                    {{ elasticsearch_form|crispy }}
+                    {{ mailhog_form|crispy }}
+
+                    {% include "buttons/next_button.html" with href="#general" %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="general">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% include "buttons/back_button.html" with href="#misc" %}
+                    <h2 class="mb-4"><i class="fas fa-tools"></i> Project configuration
+                        {% include "buttons/feedback_button.html" with url='general_feedback' %}
+                    </h2>
+
+
+                    <div id="project_name">
+                        {{ project_name_form|crispy }}
+                    </div>
+                    {% include "horizontal_text_divider.html" with html="<i class='fas fa-code text-muted fa-lg'></i>" %}
+                    <div id="programming_language">
+                        {{ programming_language_form|crispy }}
+                    </div>
+                    <div id="generate_code_examples">
+                        {{ generate_code_examples_form|crispy }}
+                    </div>
+
+                    {% include "horizontal_text_divider.html" with html="<i class='fab fa-git-alt text-muted fa-2x'></i>" %}
+                    {{ git_form|crispy }}
+
+                    <a id="download-success-link" class="js-scroll-trigger" href="#download-success"></a>
+
+                    <div id="download">
+                        <button id="download-btn" class="mt-5 btn btn-success btn-lg shadow-none hvr-icon-bob"
+                                type="button">
+                            <i class="fa fa-download hvr-icon"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
+
+
+<section id="download-success" class="d-none">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% include "buttons/back_button.html" with href="#misc" %}
+                <p class="lead">Your project is downloading..</p>
+                <form action="." method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="download-section"/>
+
+                </form>
+
+                <a href="#databases" class="mb-5 btn btn-success js-scroll-trigger hvr-icon-spin">
+                    <i class="fa fa-refresh hvr-icon"></i> Restart
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="py-5 bg-dark">
+    <div class="container">
+
+
+        <p class="m-0 text-white text-center"><span class="align-middle">Copyright &copy; Johannes Pertl 2021</span>
+        </p>
+    </div>
+</footer>
+
+
+{# Jquery #}
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+{# Bootstrap #}
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+{#Jquery easing#}
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+{# Jump to anchor if it's in context #}
+{% if anchor %}
+    <script>
+        function goToId() {
+            if (!window.location.hash) window.location = window.location + '#{{ anchor }}'
+        }
+
+        $(window).on("load", goToId)
+    </script>
+{% endif %}
+
+{# Own stuff #}
+<script src="{% static 'js/home.js' %}"></script>
+
+
+{# Nav scrolling #}
+<script src="{% static 'js/scrolling-nav.js' %}"></script>
+
+{# Modal forms #}
+<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        let asyncSuccessMessageCreate = [
+            "<div ",
+            "style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+            "class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+            "Thank you for your message!",
+            "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>",
+            "<span aria-hidden='true'>&times;</span>",
+            "</button>",
+            "</div>",
+            "<script>",
+            "$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
+            "<\/script>"
+        ].join("");
+
+        function createFeedbackAsyncModalForm() {
+            $(".create-feedback").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    asyncUpdate: true,
+                    asyncSettings: {
+                        closeOnSubmit: true,
+                        successMessage: asyncSuccessMessageCreate,
+                        dataUrl: "feedback/",
+                        dataElementId: "nonsense",
+                        dataKey: "nonsense",
+                        addModalFormFunction: createFeedbackAsyncModalForm
+                    }
+                });
+            });
+        }
+
+        createFeedbackAsyncModalForm();
+    });
+</script>
+
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,26 @@
+{% load crispy_forms_filters %}
+
+<div class="collapseForm">
+    <div class="collapseFormButton">
+
+        <button id="{{ form.prefix }}-collapseBtn" class="d-none btn btn-check p-0 m-0" type="button"
+                data-toggle="collapse"
+                data-target="#{{ form.prefix }}-collapseTarget"
+                aria-expanded="false">
+        </button>
+        <div class="manual-margin mb-3">
+            {{ form.active|as_crispy_field }}
+        </div>
+
+    </div>
+
+    <div class="collapse" id="{{ form.prefix }}-collapseTarget">
+        <div class="card card-body mb-3">
+            {{ form|as_crispy_errors }}
+            {% for field in form.visible_fields|slice:"1:" %}
+                {{ field|as_crispy_field }}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>

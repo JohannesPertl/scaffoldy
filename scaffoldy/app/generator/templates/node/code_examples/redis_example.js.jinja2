@@ -1,0 +1,11 @@
+{% if redis %}
+const redis = require("redis");
+const client = redis.createClient({host: '{{ slug }}-redis', port: 6379});
+
+client.on("error", function(error) {
+  console.error(error);
+});
+
+client.set("key", "Set and retrieve this value", redis.print);
+client.get("key", redis.print);
+{% endif %}

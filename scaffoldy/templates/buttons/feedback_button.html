@@ -1,0 +1,11 @@
+<button
+        data-container="body"
+        data-trigger="manual"
+        data-toggle="popover"
+        data-placement="top"
+        data-content="{{ feedback_popovers|random }}"
+        data-form-url="{% url url %}" type="button"
+        data-html=true
+        class="btn btn-link btn-sm text-success create-feedback pop hvr-grow">
+    <i class="far fa-comment-dots"></i> Contact
+</button>

@@ -1,0 +1,11 @@
+{% if mysql or mariadb or postgres or mongodb or redis or rabbitmq or grafana or prometheus %}
+volumes:
+{% endif %}
+{% if mysql %}  mysql:{% endif %}
+{% if mariadb %}  mariadb:{% endif %}
+{% if postgres %}  postgres:{% endif %}
+{% if mongodb %}  mongodb:{% endif %}
+{% if redis %}  redis:{% endif %}
+{% if rabbitmq %}  rabbitmq:{% endif %}
+{% if grafana %}  grafana:{% endif %}
+{% if prometheus %}  prometheus:{% endif %}

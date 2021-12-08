@@ -1,0 +1,9 @@
+{% if programming_language %}
+    app:
+      build: ./{{ slug }}/
+      container_name: {{ slug }}-{{ programming_language }}
+    {% if programming_language == "node" %}
+      ports:
+        - 1337:1337
+    {% endif %}
+{% endif %}

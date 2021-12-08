@@ -1,0 +1,16 @@
+{% if mariadb %}
+import mariadb
+
+try:
+    conn = mariadb.connect(
+        user="{{ mariadb.username }}",
+        password="{{ mariadb.password }}",
+        host="{{ slug }}-mariadb",
+        port=3306,
+        database="{{ mariadb.database_name }}"
+    )
+    print("Connected to MariaDB!")
+except mariadb.Error as e:
+    print(f"Error connecting to MariaDB: {e}")
+
+{% endif %}

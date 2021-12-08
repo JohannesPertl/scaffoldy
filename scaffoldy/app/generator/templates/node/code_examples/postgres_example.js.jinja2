@@ -1,0 +1,45 @@
+{% if postgres %}
+const { Client } = require('pg');
+
+const client = new Client({
+    user: '{{ postgres.username }}',
+    host: '{{ slug }}-postgres',
+    database: '{{ postgres.database_name }}',
+    password: '{{ postgres.password }}',
+    port: {{ postgres.port }},
+});
+
+client.connect();
+
+
+const query = `
+CREATE TABLE users (
+    email varchar,
+    firstName varchar,
+    lastName varchar,
+    age int
+);
+`;
+
+client
+    .query(query)
+    .then(res => {
+        console.log('Table successfully created');
+    })
+    .catch(err => {
+        console.error(err);
+    });
+
+
+client
+   .query("DROP TABLE users;")
+    .then(res => {
+        console.log('Database has been reset');
+    })
+    .catch(err => {
+        console.error(err);
+    })
+    .finally(() => {
+        client.end();
+    });
+{% endif %}

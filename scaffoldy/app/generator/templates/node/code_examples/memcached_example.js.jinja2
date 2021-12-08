@@ -1,0 +1,16 @@
+{% if memcached %}
+const MemcachePlus = require('memcache-plus')
+const client = new MemcachePlus('{{ slug }}-memcached')
+
+async function main() {
+//Set key
+await client.set('firstName', 'Victor')
+console.log('Successfully set the key firstName')
+
+//Get key
+const value = await client.get('firstName')
+console.log(`firstName has a value of ${ value }`)
+}
+
+main();
+{% endif %}

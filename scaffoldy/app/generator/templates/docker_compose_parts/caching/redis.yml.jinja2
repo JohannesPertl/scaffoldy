@@ -1,0 +1,10 @@
+{% if redis %}
+    redis:
+      image: redis
+      container_name: {{ slug }}-redis
+      restart: unless-stopped
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis:/data
+{% endif %}

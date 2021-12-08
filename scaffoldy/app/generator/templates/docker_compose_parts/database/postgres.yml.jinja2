@@ -1,0 +1,26 @@
+{% if postgres %}
+    postgres:
+      image: postgres
+      container_name: {{ slug }}-postgres
+      restart: unless-stopped
+      working_dir: /application
+      volumes:
+        - postgres:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_PASSWORD={{ postgres.password }}
+        - POSTGRES_DB={{ postgres.database_name }}
+        - POSTGRES_USER={{ postgres.username }}
+      ports:
+        - "{{ postgres.port }}:5432"
+    {% if postgres.pgadmin %}
+    {% set port = postgres.port + 1 %}
+    pgadmin:
+      image: dpage/pgadmin4
+      container_name: {{ slug }}-pgadmin
+      environment:
+        - PGADMIN_DEFAULT_EMAIL={{ postgres.username }}@example.com
+        - PGADMIN_DEFAULT_PASSWORD={{ postgres.password }}
+      ports:
+        - "{{ port }}:80"
+{% endif %}
+{% endif %}

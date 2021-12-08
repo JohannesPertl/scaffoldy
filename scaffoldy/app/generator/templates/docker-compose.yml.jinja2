@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+{# Main app #}
+{% include 'docker_compose_parts/app.yml.jinja2' %}
+
+{# Databases #}
+{% include 'docker_compose_parts/database/mysql.yml.jinja2' %}
+{% include 'docker_compose_parts/database/postgres.yml.jinja2' %}
+{% include 'docker_compose_parts/database/mariadb.yml.jinja2' %}
+{% include 'docker_compose_parts/database/mongodb.yml.jinja2' %}
+
+{# Message Queuing #}
+{% include 'docker_compose_parts/message_queuing/rabbitmq.yml.jinja2' %}
+{% include 'docker_compose_parts/message_queuing/kafka.yml.jinja2' %}
+{% include 'docker_compose_parts/message_queuing/nats.yml.jinja2' %}
+
+{# Caching #}
+{% include 'docker_compose_parts/caching/redis.yml.jinja2' %}
+{% include 'docker_compose_parts/caching/memcached.yml.jinja2' %}
+
+{# Metrics #}
+{% include 'docker_compose_parts/metrics/grafana.yml.jinja2' %}
+{% include 'docker_compose_parts/metrics/prometheus.yml.jinja2' %}
+{% include 'docker_compose_parts/metrics/graylog.yml.jinja2' %}
+
+{# Misc #}
+{% include 'docker_compose_parts/misc/clickhouse.yml.jinja2' %}
+{% include 'docker_compose_parts/misc/elasticsearch.yml.jinja2' %}
+{% include 'docker_compose_parts/misc/mailhog.yml.jinja2' %}
+
+{# Volumes #}
+{% include 'docker_compose_parts/volumes.yml.jinja2' %}

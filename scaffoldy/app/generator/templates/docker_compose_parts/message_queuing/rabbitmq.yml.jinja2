@@ -1,0 +1,17 @@
+{% if rabbitmq %}
+    rabbitmq:
+      image: rabbitmq:3.8.9{% if rabbitmq.management %}-management{% endif %}-alpine
+      container_name: {{ slug }}-rabbitmq
+      hostname: rabbitmq
+      restart: unless-stopped
+      ports:
+        - 5672:5672
+        {% if rabbitmq.management %}
+        - 15672:15672 # Management UI
+        {% endif %}
+      volumes:
+        - rabbitmq:/var/lib/rabbitmq
+      environment:
+        - RABBITMQ_DEFAULT_USER={{ rabbitmq.username }}
+        - RABBITMQ_DEFAULT_PASS={{ rabbitmq.password }}
+{% endif %}

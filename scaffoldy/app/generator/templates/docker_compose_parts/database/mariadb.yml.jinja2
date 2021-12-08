@@ -1,0 +1,21 @@
+{% if mariadb %}
+    mariadb:
+      image: mariadb
+      container_name: {{ slug }}-mariadb
+      working_dir: /application
+      volumes:
+        - mariadb:/var/lib/mysql
+      environment:
+        - MYSQL_ROOT_PASSWORD={{ mariadb.password }}
+        - MYSQL_DATABASE={{ mariadb.database_name }}
+        - MYSQL_USER={{ mariadb.username }}
+        - MYSQL_PASSWORD={{ mariadb.password }}
+      ports:
+        - "{{ mariadb.port }}:3306"
+    {% if mariadb.phpmyadmin and not mysql.phpmyadmin %}
+        {% set port = mariadb.port + 1 %}
+        {% with db="mariadb", port=port %}
+{% include "docker_compose_parts/database/phpmyadmin.yml.jinja2" %}
+        {% endwith %}
+    {% endif %}
+{% endif %}

@@ -1,0 +1,8 @@
+{% if redis %}
+import redis
+
+r = redis.Redis(host='{{ slug }}-redis', port=6379)
+r.set('service-up', 'Redis is working!')
+result = r.get('service-up')
+print(result)
+{% endif %}

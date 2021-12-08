@@ -1,0 +1,7 @@
+{% if nats %}
+    nats:
+      image: nats:1.4.1
+      container_name: {{ slug }}-nats
+      ports:
+        - "4222:4222"
+{% endif %}

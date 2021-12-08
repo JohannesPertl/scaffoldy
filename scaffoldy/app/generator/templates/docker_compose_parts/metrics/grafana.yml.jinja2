@@ -1,0 +1,13 @@
+{% if grafana %}
+    grafana:
+      container_name: {{ slug }}-grafana
+      image: grafana/grafana:6.2.1
+      ports:
+        - "3000:3000"
+      volumes:
+        - grafana:/var/lib/grafana
+      restart: always
+      environment:
+        - GF_SECURITY_ADMIN_USER={{ grafana.username }}
+        - GF_SECURITY_ADMIN_PASSWORD={{ grafana.password }}
+{% endif %}

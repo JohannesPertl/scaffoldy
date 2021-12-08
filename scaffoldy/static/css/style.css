@@ -1,0 +1,97 @@
+/*Colors*/
+:root {
+    --mustard: #FFC049;
+    --petrol: #11998e;
+    --petrol-dark: #00635C;
+    --petrol-medium: #027E75;
+    --secondary: #38ef7d;
+    --white: #fff;
+    --not-quite-white: #fffffd;
+    --gray: #30353b;
+}
+
+.logo {
+    color: var(--petrol);
+    font-family: 'Fredoka One', cursive;
+}
+
+h1.logo {
+    font-size: calc(20% + 8vw);
+}
+
+
+body, .card-body, .modal-body, .modal-footer, .modal-header, .textinput, .textInput, .textarea, .form-text, .select, .numberInput {
+    background: var(--not-quite-white) !important;
+}
+
+.bg-dark {
+    background: var(--gray) !important;
+
+}
+
+.text-white {
+    color: var(--not-quite-white) !important;
+}
+
+.text-success, .checkboxinput {
+    color: var(--petrol-medium) !important;
+}
+
+
+.btn-success {
+    background-color: var(--petrol-medium);
+    border-color: var(--petrol-medium);
+}
+
+.btn-success:focus, .btn-success:hover, .btn-success:active {
+    background-color: var(--petrol-dark) !important;
+    border-color: var(--petrol-dark) !important;
+    box-shadow: var(--petrol-dark) !important;
+    background-image: none !important;
+    outline: none !important;
+}
+
+.btn-success:disabled {
+    background-color: #2FA39B !important;
+    border-color: #2FA39B !important;
+    box-shadow: #2FA39B !important;
+    background-image: none !important;
+    outline: none !important;
+}
+
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: var(--mustard) !important;
+}
+
+/* Remove margin from specific crispy form groups */
+.manual-margin > .form-group {
+    margin-bottom: 0;
+}
+
+.link-unstyled, .link-unstyled:visited, .link-unstyled:hover, .link-unstyled:active, .link-unstyled:focus, .link-unstyled:active:hover {
+    font-style: inherit;
+    color: inherit;
+    background-color: transparent;
+    font-size: inherit;
+    text-decoration: none;
+    font-variant: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    border-radius: inherit;
+    border: inherit;
+    outline: inherit;
+    box-shadow: inherit;
+    padding: inherit;
+    vertical-align: inherit;
+}
+
+/*Offset anchor position by height*/
+:target::before {
+    content: "";
+    display: block;
+    height: 100px;
+    margin: -100px 0 0;
+}

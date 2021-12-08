@@ -1,0 +1,5 @@
+{% if clickhouse %}
+    clickhouse:
+      image: yandex/clickhouse-server:latest
+      container_name: {{ slug }}-clickhouse
+{% endif %}

@@ -1,0 +1,45 @@
+{% if graylog %}
+    {% if not mongodb %}
+    mongo:
+      image: mongo:4.2
+    {% endif %}
+    {% if not elasticsearch %}
+    elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.0
+      environment:
+        - http.host=0.0.0.0
+        - transport.host=localhost
+        - network.host=0.0.0.0
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      deploy:
+        resources:
+          limits:
+            memory: 1g
+    {% endif %}
+    graylog:
+      image: graylog/graylog:4.0
+      environment:
+        # must be at least 16 characters
+        - GRAYLOG_PASSWORD_SECRET={{ graylog.password_secret }}
+        - GRAYLOG_ROOT_PASSWORD_SHA2={{ graylog.hashed_password }}
+        - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
+      restart: always
+      depends_on:
+        - mongo
+        - elasticsearch
+      ports:
+        # Graylog web interface and REST API
+        - 9000:9000
+        # Syslog TCP
+        - 1514:1514
+        # Syslog UDP
+        - 1514:1514/udp
+        # GELF TCP
+        - 12201:12201
+        # GELF UDP
+        - 12201:12201/udp
+{% endif %}
