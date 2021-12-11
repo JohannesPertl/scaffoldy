@@ -32,7 +32,7 @@ Scaffoldy can also include code examples based on the chosen language.
 
 ### Development
 * Add your secret key in [.env.dev](.env.dev) or [.env.prod](.env.prod)
-* (Add your email in [.env.prod](.env.prod))
+* (Add your email and domain in [.env.prod](.env.prod))
 * Run `start.sh` for development and `start.prod.sh` for production
 
 
