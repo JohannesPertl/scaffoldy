@@ -7,7 +7,7 @@ from hashlib import sha256
 
 class GrafanaForm(FoldoutForm):
     username = forms.CharField(label="Username", required=False)
-    password = forms.CharField(label="Password", help_text=mark_safe("This password is not saved and will only be used for generating the docker-compose.yml file. For security reasons, you should change it in production."), required=False)
+    password = forms.CharField(label="Password", help_text=mark_safe("This password is not saved and will only be used for generating the docker-compose.yml file. <br> For security reasons, you should change it in production."), required=False)
 
     label = "Grafana"
     prefix = "grafana"

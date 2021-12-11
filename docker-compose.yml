@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     env_file:
-      - ./.env.dev.dev
+      - ./.env.dev
   db:
     image: postgres:12.0-alpine
     volumes:
