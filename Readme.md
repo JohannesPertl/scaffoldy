@@ -30,8 +30,11 @@ Scaffoldy can also include code examples based on the chosen language.
 
 ## Setup
 
-* Create a `.env` and a `.env.prod` file with the required env variables
+### Development
+* Add your secret key in [.env.dev](.env.dev) or [.env.prod](.env.prod)
+* (Add your email in [.env.prod](.env.prod))
 * Run `start.sh` for development and `start.prod.sh` for production
+
 
 
 
