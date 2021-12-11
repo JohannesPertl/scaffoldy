@@ -12,7 +12,7 @@ services:
     expose:
       - 8000
     env_file:
-      - ./.env.dev.prod
+      - ./.env.prod
     depends_on:
       - db
   db:
@@ -20,7 +20,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - ./.env.dev.prod.db
+      - ./.env.prod.db
   nginx:
     build: nginx/
     volumes:
@@ -32,7 +32,7 @@ services:
       - 80:80
       - 443:443
     env_file:
-      - ./.env.dev.prod
+      - ./.env.prod
     depends_on:
       - web
     restart: unless-stopped
